@@ -5,3 +5,5 @@ venv
 *.pyc
 dist
 __pycache__
+requirements.txt
+requirements.lock
