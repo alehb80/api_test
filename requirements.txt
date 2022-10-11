@@ -1,5 +1,0 @@
-Flask
-flask
-pymongo
-requests
-tenacity
