@@ -25,7 +25,9 @@ def check_authentication() -> Tuple[Response, int]:
     variable, then the request is allowed to proceed. Otherwise, the request is rejected with a 401 status code
     :return: A tuple of a response and an integer.
     """
+    # Retrieving API-key from the request headers
     apikey = request.headers.get('x-api-key', '')
+    # Check on the API-key for the authentication
     if apikey != API_KEY:
         return jsonify({'message': 'Authentication failed: the API key is not valid or missing in request.'}), 401
 
@@ -42,27 +44,31 @@ def ingest_api_v1_ingest_post() -> Dict:
         - response_code
         - response_time
     """
+    # Retrieving parameters from the request
     json_request = request.get_json()
+    # Setting the start time of the request
     start_datetime = datetime.datetime.now()
-    # faccio controlli sui due campi
+    # Checking the two json fields
     if type(json_request.get('key')) == int or type(json_request.get('key')) == float \
             and json_request.get('key') in range(1, 7) \
             and type(json_request.get('payload')) == str and len(json_request.get('payload')) in range(10, 256):
-        # Gestisco creation_datetime
+        # Saving the date and time of the request
         json_request['creation_datetime'] = start_datetime.strftime("%Y-%m-%d %H:%M:%S.%f")
-        # Gestisco response_code
+        # Saving the code of the response
         json_request['response_code'] = random.choices(population=[200, 500], weights=(90, 10), k=1)[0]
-        # Gestisco response_time
+        # Setting time delta of the request
         end_datetime = datetime.datetime.now()
         response_time = (end_datetime - start_datetime).microseconds
+        # Checking if the time delta belongs to an interval from 10ms to 50ms
         if response_time in range(10, 51):
+            # Saving the time of the response corresponds to time delta
             json_request['response_time'] = response_time
+            # Saving data to database
             dao.save(elem=json_request)
         else:
             raise TimeoutError('Timeout error')
     else:
         raise ValueError("Wrong parameters")
-    # ritorno il json con tutti i dati
     return json.loads(json_util.dumps(json_request))
 
 
@@ -77,10 +83,12 @@ def retrieve_api_v1_retrieve_get() -> List:
         - response_code: the response code of the request
         - creation_datetime: the creation datetime of the request
     """
+    # Retrieving parameters from the request
     date_from = request.args.get('date_from')
     date_to = request.args.get('date_to')
+    # Retrieval of statistics grouped by minute and relating to the chosen time window
     results_for_minutes = get_results_for_minutes(date_from=date_from, date_to=date_to)
-    # faccio statistiche sui valori ritornati
+    # Logs display the list of the last 10 logs of the last aggregation in the time window.
     stats_logs = get_stats_logs(date_from=date_from, date_to=date_to)
     logging.info(" Ultimi 10 logs dell’ultima aggregazione nella finestra temporale.")
     for log_info in stats_logs:
