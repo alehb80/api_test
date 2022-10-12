@@ -3,7 +3,7 @@ from collections import OrderedDict
 from datetime import timedelta
 from typing import List
 
-from backend.config.app_config import dao
+from backend.config.app_config import odm
 
 
 def get_results_for_minutes(date_from: str, date_to: str) -> List:
@@ -79,5 +79,5 @@ def get_results_for_minutes(date_from: str, date_to: str) -> List:
             "$sort": OrderedDict([("_id.interval", 1), ("_id.key", 1)])
         },
     ]
-    total_stats = list(dao.collection.aggregate(pipeline))
+    total_stats = list(odm.collection.aggregate(pipeline))
     return total_stats

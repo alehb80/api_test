@@ -1,7 +1,7 @@
 import pathlib
 from enum import Enum
 
-from backend.dao.dao import DocumentDAO
+from backend.odm.odm import DocumentODM
 
 ################################################################################################
 RESOURCES = pathlib.Path(__file__).parent.absolute().parent / "resources"
@@ -26,7 +26,7 @@ class ApiEndpoint(Enum):
     API_ENDPOINT_RETRIEVE = "retrieve"
 
 
-dao = DocumentDAO(
+odm = DocumentODM(
     host=MONGO_HOST,
     port=MONGO_PORT,
     db=MONGO_DB,

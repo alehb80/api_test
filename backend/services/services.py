@@ -7,7 +7,7 @@ from typing import Dict, Tuple, List
 from bson import json_util
 from flask import Flask, jsonify, request, Response
 
-from backend.config.app_config import API_KEY, API_URL, ApiEndpoint, dao
+from backend.config.app_config import API_KEY, API_URL, ApiEndpoint, odm
 from backend.utils.data_utils import get_results_for_minutes
 from backend.utils.logger_utils import get_stats_logs
 
@@ -64,7 +64,7 @@ def ingest_api_v1_ingest_post() -> Dict:
             # Saving the time of the response corresponds to time delta
             json_request['response_time'] = response_time
             # Saving data to database
-            dao.save(elem=json_request)
+            odm.save(elem=json_request)
         else:
             raise TimeoutError('Timeout error')
     else:

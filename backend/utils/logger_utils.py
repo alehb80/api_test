@@ -3,7 +3,7 @@ from collections import OrderedDict
 from datetime import timedelta
 from typing import List
 
-from backend.config.app_config import dao
+from backend.config.app_config import odm
 
 
 def get_stats_logs(date_from: str, date_to: str) -> List:
@@ -41,4 +41,4 @@ def get_stats_logs(date_from: str, date_to: str) -> List:
             "$limit": 10
         },
     ]
-    return list(dao.collection.aggregate(pipeline))
+    return list(odm.collection.aggregate(pipeline))

@@ -3,7 +3,7 @@ from typing import Dict
 from pymongo import MongoClient
 
 
-class DocumentDAO:
+class DocumentODM:
 
     def __init__(
             self,
