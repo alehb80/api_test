@@ -1,4 +1,9 @@
-version: "3"
+version: "3.5"
+
+networks:
+  api-test:
+    driver: bridge
+    name: api-test
 
 services:
   mongo:
@@ -7,6 +12,8 @@ services:
       - /home/alessio/Downloads/test/vol/mongo:/data/db/
     ports:
       - "27017:27017"
+    networks:
+      - api-test
   
   backend:
     environment:
@@ -15,3 +22,5 @@ services:
     build: ./
     ports:
       - "8000:8000"
+    networks:
+      - api-test

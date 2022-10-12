@@ -7,7 +7,8 @@ from typing import Dict, Tuple, List
 from bson import json_util
 from flask import Flask, jsonify, request, Response
 
-from backend.config.app_config import API_KEY, API_URL, ApiEndpoint, odm
+from backend.config.app_config import API_KEY, API_URL, ApiEndpoint
+from backend.config.globals import odm
 from backend.utils.data_utils import get_results_for_minutes
 from backend.utils.logger_utils import get_stats_logs
 
@@ -102,4 +103,4 @@ def retrieve_api_v1_retrieve_get() -> List:
     return results_for_minutes
 
 
-app.run(port=8000)
+app.run(host="0.0.0.0", port=8000)

@@ -1,19 +1,20 @@
+import os
 import pathlib
 from enum import Enum
-
-from backend.odm.odm import DocumentODM
 
 ################################################################################################
 RESOURCES = pathlib.Path(__file__).parent.absolute().parent / "resources"
 
 ################################################################################################
 # MONGODB MOCKUP
-MONGO_HOST = "localhost"  # 44.242.171.0 - 68.183.66.3
+MONGO_HOST = "localhost"
 MONGO_PORT = 27017
 MONGO_DB = "test_tecnico"
 MONGO_USERNAME = ""
 MONGO_PASSWORD = ""
 MONGO_COLL = "stats"
+
+MONGODB_URL = os.environ.get("MONGODB_URL")
 
 ################################################################################################
 # WS API CONFIGS
@@ -24,13 +25,3 @@ API_KEY = "BigProfiles-API"
 class ApiEndpoint(Enum):
     API_ENDPOINT_INGEST = "ingest"
     API_ENDPOINT_RETRIEVE = "retrieve"
-
-
-odm = DocumentODM(
-    host=MONGO_HOST,
-    port=MONGO_PORT,
-    db=MONGO_DB,
-    username=MONGO_USERNAME,
-    password=MONGO_PASSWORD,
-    collection=MONGO_COLL
-)

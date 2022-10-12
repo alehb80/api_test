@@ -3,7 +3,7 @@ from collections import OrderedDict
 from datetime import timedelta
 from typing import List
 
-from backend.config.app_config import odm
+from backend.config.globals import odm
 
 
 def get_results_for_minutes(date_from: str, date_to: str) -> List:

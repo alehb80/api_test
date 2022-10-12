@@ -2,24 +2,18 @@ from typing import Dict
 
 from pymongo import MongoClient
 
+from backend.config.app_config import MONGODB_URL
+
 
 class DocumentODM:
 
     def __init__(
             self,
-            host: str,
-            port: int,
             db: str,
-            username: str,
-            password: str,
             collection: str
     ):
-        self.host = host
-        self.port = port
         self.db = db
-        self.username = username
-        self.password = password
-        self.client = MongoClient(host=host, port=port, username=username, password=password)
+        self.client = MongoClient(MONGODB_URL)
         self.collection = self.client.get_database(self.db).get_collection(collection)
 
     ############## GET ###############
