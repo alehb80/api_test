@@ -8,4 +8,3 @@ echo "$app_home"
 docker-compose -f "$app_home/../docker-compose.yml" up --remove-orphans -V --build -d
 docker-compose pull
 docker-compose up -d
-python ../backend/services/services.py

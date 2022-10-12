@@ -3,11 +3,15 @@ version: "3"
 services:
   mongo:
     image: "mongo:4.0.24-xenial"
+    volumes:
+      - /home/alessio/Downloads/test/vol/mongo:/data/db/
+    ports:
+      - "27017:27017"
   
   backend:
     environment:
       - MONGODB_URL=mongodb://mongo:27017
     image: backend
-    build: backend
+    build: ./
     ports:
       - "8000:8000"
